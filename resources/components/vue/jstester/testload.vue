@@ -1,5 +1,5 @@
 <template>
-	<div style="width: 360px;">
+	<div style="width: 360px;" id="codeList">
 		<div style="width: 100%; height: 35px; display: flex; align-items: center;">
 			<button type="button" style="margin-left: auto; margin-right: 5px;">X</button>
 		</div>
@@ -23,7 +23,6 @@
 
 <script>
 import { defineModel } from 'vue';
-
 const codelists = defineModel('lists');
-
+console.log(codelists);
 </script>

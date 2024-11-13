@@ -57,6 +57,26 @@ import Swal from 'sweetalert2';
 import MultiModalControl from '../../../js/multiModalControl.js';
 import * as cookieModule from '../../../js/cookie.js';
 import LoadModalComponent from './testload.vue';
+import { ref } from 'vue';
+
+const html_text = ref('');
+const css_text = ref('');
+const js_text = ref('');
+const lists = ref([]);
+const pagination = ref('');
+const page = ref('');
+
+
+
+async function randomStringGenerator(length) {
+	const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let result = '';
+	const charactersLength = characters.length;
+	for(let i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}			
+	return result;
+}
 
 export default {
 	components: {
@@ -67,7 +87,7 @@ export default {
 			html: '',
 			css: '',
 			js: '',
-			lists: [],
+			lists: lists,
 			pagination: '',
 			page: 1,
 		}
@@ -140,8 +160,7 @@ export default {
 					_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
 					page: getPage ?? this.page,
 					cookie: cookieModule.getCookie('testcode'),
-				}).then(result => {
-					console.log(result);
+				}).then(result => {					
 					this.lists = result.data.list;
 					this.pagination = result.data.paging.pages;
 					let modal_layer = new MultiModalControl();
