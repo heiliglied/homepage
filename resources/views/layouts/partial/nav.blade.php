@@ -9,7 +9,7 @@
 				<a class="nav-link" href="{{ route('jsView') }}">짭피들러</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="">아이디어 보드</a>
+				<a class="nav-link" href="{{ route('board') }}">아이디어 보드</a>
 			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
@@ -22,7 +22,7 @@
 			</li>
 			@else
 			<li class="nav-item">
-				<a class="nav-link" href="">내페이지</a>
+				<a class="nav-link" href="{{ route('myView') }}">내페이지</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="{{ route('logout') }}">로그아웃</a>

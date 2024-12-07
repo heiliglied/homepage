@@ -14,12 +14,29 @@
         "vite": "^5.4.2"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-alignment": "^43.3.1",
+        "@ckeditor/ckeditor5-autoformat": "^43.3.1",
+        "@ckeditor/ckeditor5-basic-styles": "^43.3.1",
+        "@ckeditor/ckeditor5-build-classic": "^43.3.1",
+        "@ckeditor/ckeditor5-editor-classic": "^43.3.1",
+        "@ckeditor/ckeditor5-essentials": "^43.3.1",
+        "@ckeditor/ckeditor5-image": "^43.3.1",
+        "@ckeditor/ckeditor5-indent": "^43.3.1",
+        "@ckeditor/ckeditor5-link": "^43.3.1",
+        "@ckeditor/ckeditor5-list": "^43.3.1",
+        "@ckeditor/ckeditor5-media-embed": "^43.3.1",
+        "@ckeditor/ckeditor5-paragraph": "^43.3.1",
+        "@ckeditor/ckeditor5-table": "^43.3.1",
+        "@ckeditor/ckeditor5-theme-lark": "^43.3.1",
+        "@ckeditor/ckeditor5-typing": "^43.3.1",
+        "@ckeditor/ckeditor5-vue": "^7.3.0",
         "@vitejs/plugin-react": "^4.3.1",
         "@vitejs/plugin-vue": "^5.1.2",
+        "lodash": "^4.17.21",
         "monaco-editor": "^0.52.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "sweetalert2": "^11.14.2",
+        "sweetalert2": "^11.6.13",
         "toastr": "^2.1.4"
     }
 }

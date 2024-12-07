@@ -55,4 +55,9 @@ class UserService
 							->where('created_at', '>=', $data['created_at'])
 							->count();
 	}
+	
+	public function getUserData(int $id)
+	{
+		return User::where('id', $id)->first();
+	}
 }

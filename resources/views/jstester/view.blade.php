@@ -44,6 +44,8 @@
 	<save-url id="saveUrl" data="{{ route('saveTestCode') }}"></save-url>
 	<run-url id="runUrl" data="{{ route('runCode') }}"></run-url>
 	<load-url id="loadUrl" data="{{ route('loadCode') }}"></load-url>
+	<view-url id="viewUrl" data="{{ route('viewCode') }}"></view-url>
+	<delete-url id="deleteUrl" data="{{ route('deleteCode') }}"></delete-url>
 </div>
 @endsection
 

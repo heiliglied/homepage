@@ -54,8 +54,6 @@ class AuthLib
 				'msg' => '인증 코드가 발송되었습니다.'
 			];
 		} catch(\Exception $e) {
-			print_r($e->getMessage());
-			exit;
 			return [
 				'status' => 'error',
 				'msg' => '코드 발송에 실패하였습니다.'
@@ -91,6 +89,54 @@ class AuthLib
 			return [
 				'status' => 'error',
 				'msg' => '잘못된 인증 번호입니다.',
+			];
+		}
+	}
+	
+	public function getUserData(int $user_id)
+	{
+		$UserService = UserService::getInstance();
+		return $UserService->getUserData($user_id);
+	}
+	
+	public function updateUserData(array $user)
+	{
+		$update = [
+			'name' => $user['name'],
+			'email' => $user['email'],
+		];
+		
+		if($user['password_change'] == 'Y') {
+			if($user['password'] == '' || $user['password_confirmation'] == '') {
+				return [
+					'status' => 'error',
+					'msg' => '비밀번호를 바르게 입력 해 주세요.',
+				];
+			}
+			
+			if($user['password'] != $user['password_confirmation']) {
+				return [
+					'status' => 'error',
+					'msg' => '비밀번호가 일치하지 않습니다.',
+				];
+			}
+			
+			$update['password'] = bcrypt($user['password']);
+			$update['password_change_date'] = date('Y-m-d');
+		}
+		
+		$UserService = UserService::getInstance();
+		
+		try {
+			$UserService->updateUser($user['uid'], $update);
+			return [
+				'status' => 'success',
+				'msg' => '정보가 변경되었습니다.',
+			];
+		} catch(\Exception $e) {
+			return [
+				'status' => 'error',
+				'msg' => '변경에 실패하였습니다.',
 			];
 		}
 	}

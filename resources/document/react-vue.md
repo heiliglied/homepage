@@ -1,4 +1,4 @@
-# laravel react 사용하기.(use by vite)  
+# laravel react - vue 사용하기.(use by vite)  
   
 ## 관련 프로그램 설치.  
  - npm install react@latest react-dom@latest //기본 리액트 설치  

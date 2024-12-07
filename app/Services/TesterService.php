@@ -37,4 +37,14 @@ class TesterService
 	{
 		return JsTester::where($column, $value)->count();
 	}
+	
+	public function getTesterCode(int $id)
+	{
+		return JsTester::where('id', $id)->first();
+	}
+	
+	public function deleteTesterCode(int $id)
+	{
+		return JsTester::where('id', $id)->delete();
+	}
 }

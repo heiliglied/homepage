@@ -47,6 +47,8 @@ class TesterLib
 				'msg' => '코드가 저장 되었습니다.',
 			];
 		} catch(\Exception $e) {
+			print_r($e->getMessage());
+			exit;
 			return [
 				'status' => 'error',
 				'msg' => '저장에 실패하였습니다.',
@@ -83,5 +85,23 @@ class TesterLib
 			'list' => $list,
 			'paging' => $pagination,
 		];
+	}
+	
+	public function viewTester(int $id)
+	{
+		$TesterService = TesterService::getInstance();
+		$testCode = $TesterService->getTesterCode($id);
+		return json_decode($testCode->code, true);
+	}
+	
+	public function deleteTester(int $id)
+	{
+		$TesterService = TesterService::getInstance();
+		try {
+			$TesterService->deleteTesterCode($id);
+			return 'success';
+		} catch(\Exception $e) {
+			return 'error';
+		}
 	}
 }

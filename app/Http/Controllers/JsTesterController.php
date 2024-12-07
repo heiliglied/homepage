@@ -56,4 +56,27 @@ class JsTesterController extends Controller
 			]
 		);
 	}
+	
+	public function viewCode(Request $request)
+	{
+		$TesterLib = new TesterLib();
+		$codes = $TesterLib->viewTester($request->id);
+		
+		$html = $codes['html'] == null ? '' : $codes['html'];
+		$css = $codes['css'] == null ? '' : $codes['css'];
+		$js = $codes['js'] == null ? '' : $codes['js'];
+		
+		return [
+			'html' => $html,
+			'css' => $css,
+			'js' => $js,
+			'view' => View::make('jstester.load', ['html' => $html, 'css' => $css, 'js' => $js])->render(),
+		];
+	}
+	
+	public function deleteCode(Request $request)
+	{
+		$TesterLib = new TesterLib();
+		return $TesterLib->deleteTester($request->id);
+	}
 }

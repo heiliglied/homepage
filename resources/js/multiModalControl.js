@@ -1,5 +1,5 @@
 export default class MultiModalControl {
-    zIndex = 10000;
+    zIndex = 1000;
     draggable = false;
     setElement;
     bodyFix = true;
@@ -18,6 +18,143 @@ export default class MultiModalControl {
                 this.zIndex = options.index;
             }
         }
+    }
+	
+	viewModal(depth, e_id, vail, autoClose, draggable, dragArea) {
+		let element = document.getElementById(e_id);
+
+        if(element == null) {
+            return false;
+        }
+		
+        this.draggable = draggable;
+        if(dragArea != undefined && typeof(dragArea) === 'boolean') {
+            this.dragArea = dragArea;
+        }
+        
+        let mouseClick = this.mouseClick;
+        let posX = this.posX;
+        let posY = this.posY;
+
+        if(vail == true) {
+			let vails = document.getElementsByClassName('vail-element');
+			if(vails.length < 1) {
+				let vailId = 'multi-vail-' + depth;
+				let vailElement = document.createElement('div');
+				vailElement.setAttribute('id', vailId);
+				vailElement.setAttribute('class', 'vail-element');
+				vailElement.setAttribute('style', 'position: absolute; top:0; left:0; bottom: 0; width:100%; height:100%; background:#000; z-index:' + (this.zIndex + depth) + '; opacity:0.3;');
+				if(autoClose == true) {
+					vailElement.addEventListener('click', () => { this.autoHideModal(e_id, vailId); });
+				}
+				document.body.insertAdjacentElement('beforeend', vailElement);
+			}
+        }
+
+        let modalWidth = element.offsetWidth;		
+		modalWidth = modalWidth <= 360 ? 360 : modalWidth;
+		modalWidth = modalWidth + 'px';
+        //let modalHeight = element.offsetHeight;
+		//modalHeight = modalHeight <= 120 ? 120 : modalHeight;
+		//modalHeight = modalHeight + 'px';
+		
+        //let modalId = 'multi-modal-' + depth;
+        //let modalId = element.getAttribute('id') ?? 'multi-modal-' + depth;
+        //element.setAttribute('id', modalId);
+        element.setAttribute('style', 'position: fixed; width: ' + modalWidth + '; top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%); background:#FFF; z-index:' + (this.zIndex + depth + 1) + '; display: ;');
+
+        if(this.draggable == true) {
+            if(this.dragArea == true) {
+                let dragElement = element;
+                dragElement.style.width = modalWidth;
+                dragElement.style.height = '20px';
+                dragElement.style.backgroundColor = "#abcdef";
+                modalHeight = String(Number(modalHeight.replace('px', '')) + 20) + 'px';
+                dragElement.addEventListener('mousedown', function(event){
+                    mouseClick = true;
+                    posX = event.clientX;
+                    posY = event.clientY;
+                });
+
+                dragElement.addEventListener('mousemove', function(event){
+                    if(mouseClick == true) {
+                        let parentElement = this.parentElement; 
+
+                        var now_posX = posX - event.clientX;
+                        var now_posY = posY - event.clientY;
+
+                        posX = event.clientX;
+                        posY = event.clientY;
+
+                        parentElement.style.left = (parentElement.offsetLeft - now_posX) + "px";
+                        parentElement.style.top = (parentElement.offsetTop - now_posY) + "px";
+                    }
+                });
+
+                dragElement.addEventListener('mouseup', function(event){
+                    mouseClick = false;
+                });
+
+                document.addEventListener('mouseup', function(event){
+                    mouseClick = false;
+                });
+            } else {
+                element.addEventListener('mousedown', function(event){
+                    mouseClick = true;
+                    posX = event.clientX;
+                    posY = event.clientY;
+                });
+
+                element.addEventListener('mousemove', function(event){
+                    if(mouseClick == true) {
+                        var now_posX = posX - event.clientX;
+                        var now_posY = posY - event.clientY;
+
+                        posX = event.clientX;
+                        posY = event.clientY;
+
+                        this.style.left = (this.offsetLeft - now_posX) + "px";
+                        this.style.top = (this.offsetTop - now_posY) + "px";
+                    }
+                });
+
+                element.addEventListener('mouseup', function(event){
+                    mouseClick = false;
+                });
+
+                document.addEventListener('mouseup', function(event){
+                    mouseClick = false;
+                });
+            }
+        }
+
+        if(this.bodyFix == true) {
+            document.body.style.overflow = 'hidden';
+        }
+
+		element.style.display = "";		
+        this.zIndex++;
+    }
+	
+	disableVail() {
+        let vails = document.getElementsByClassName('vail-element');
+        for(let i = 0; i < vails.length; i++) {
+            vails[i].remove();
+        }
+    }
+	
+	autoHideModal(elementId, vailId) {
+		document.getElementById(elementId).style.display = 'none';
+		document.getElementById(vailId)?.remove();
+	}
+
+    hideModal(element, depth) {
+        let modalElement = element;
+        for(let i = 0; i < depth; i++) {
+            modalElement = modalElement.parentNode;
+        }
+
+        modalElement.style.display = 'none';
     }
 	
 	setModal(depth, element, vail, autoClose, draggable, dragArea) {

@@ -141,3 +141,50 @@
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
 }
+
+.file_list {
+	font-size: 14pt;
+}
+
+.reply_form {
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin-bottom: 5px;
+}
+
+.reply_personal {
+	position: relative;
+	width: 100%;
+	height: 30px;
+	border-bottom: 1px black solid;
+}
+
+.replyer {
+	position: relative;
+	width: 50%;
+	float: left;
+	padding-left: 5px;
+}
+
+.reply_date {
+	position: relative;
+	width: 50%;
+	float: right;
+	padding-right: 5px;
+	text-align: right;
+}
+
+.reply_option {
+	position: relative;
+	width: 100%;
+	border-bottom: 1px black solid;
+	padding-right: 5px;
+}
+
+.reply_text {
+	position: relative;
+	width: 100%;
+	padding: 5px;
+	border-bottom: 1px green dotted;
+}
