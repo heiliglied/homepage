@@ -11,7 +11,7 @@
 					<div class="card-footer text-right">
 						<div class="file_list" v-if="files.length > 0 && permission == 'Y'">
 							<ul>
-								<li v-for="(file, index) in files" @click="file_get(file.id)">{{ file.original_name }}</li>
+								<li v-for="(file, index) in files" @click="file_get(file.id)" style="text-decoration: underline; color: blue; cursor: pointer;">{{ file.original_name }}</li>
 							</ul>
 						</div>
 						
@@ -187,7 +187,7 @@ onMounted(() => {
 });
 
 function goList() {
-	location.href=document.getElementById('listUrl').getAttribute('data');
+	location.href=document.getElementById('boardUrl').getAttribute('data');
 }
 
 function goModify() {
@@ -201,7 +201,7 @@ async function delBoard() {
 	delUrl = delUrl.replace(':id', board.value.id);
 	
 	Swal.fire({
-		title: '파일을 삭제 하시겠습니까?',
+		title: '게시글을 삭제 하시겠습니까?',
 		confirmButtonColor: '#3085d6',
 		confirmButtonText: '확인',
 		allowOutsideClick: false,
@@ -223,6 +223,7 @@ async function delBoard() {
 							confirmButtonColor: '#3085d6',
 							confirmButtonText: '확인',
 						});
+						return false;
 					}
 					goList();
 				});
@@ -258,7 +259,7 @@ async function censorship() {
 	});
 }
 
-function file_get() {
+function file_get(id) {
 	let downUrl = document.getElementById('downloadFileUrl').getAttribute('data');
 	downUrl = downUrl.replace(':id', id);
 	location.href=downUrl;

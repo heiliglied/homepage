@@ -159,7 +159,9 @@ class BoardLib
 			'pageSize' => $pageSize,
 			'showPages' => $showPages,
 			'currentPage' => $page,
-			'skip' => true,
+			'arrow' => false,
+			'skip' => false,
+			'template' => '',
 		];
 		
 		$pageList = $this->pagination($parameters);
@@ -354,6 +356,19 @@ class BoardLib
 		
 		DB::beginTransaction();
 		try {
+			$BoardService->deleteBoard($id);
+			$BoardService->deleteBoardFiles($id);
+			DB::commit();
+			
+			if(!empty($files)) {
+				$FileLibrary = new FileLibrary();
+				
+				foreach($files as $value) {
+					$FileLibrary->deleteFile($value->renamed_name, 'upload');
+					exit;
+				}
+			}
+			
 			return [
 				'status' => 'success',
 				'msg' => '삭제 되었습니다.',
@@ -458,43 +473,3 @@ class BoardLib
 		];
 	}
 }
-
-/*
-$ideaBoardService = IdeaBoardService::getInstance();
-		$fileService = FileService::getInstance();
-		$ideaReplyService = IdeaReplyService::getInstance();
-		//$ideaBoard = $ideaBoardService->getOneRow('id', $request->id);
-		$files = $fileService->getList($condition);
-		$replies = $ideaReplyService->filteredCount('idea_board', $request->id);
-		
-		if($replies > 0) {
-			try {
-				DB::beginTransaction();
-				$fileService->deleteList($condition);
-				$ideaBoardService->update('id', $request->id, ['subject' => '삭제된 글입니다.', 'contents' => '', 'censorship' => 'N', 'deleted_at' => \Carbon\Carbon::now()]);
-				DB::commit();
-			} catch(\Exception $e) {
-				abort(500);
-			}
-			
-			$fileLibrary = new FileLibrary();
-			foreach($files as $value) {
-				$fileLibrary->deleteFile($value->renamed_name);
-			}
-		} else {
-			try {
-				DB::beginTransaction();
-				$fileService->deleteList($condition);
-				$ideaBoardService->delete(['id' => $request->id]);
-				DB::commit();
-			} catch(\Exception $e) {
-				abort(500);
-			}
-			
-			$fileLibrary = new FileLibrary();
-			foreach($files as $value) {
-				$fileLibrary->deleteFile($value->renamed_name);
-			}
-		}
-		return redirect('/ideaBoard/list');
-		*/

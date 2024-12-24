@@ -21,6 +21,7 @@
 		
 	</div>
 	
+	<board-url id="boardUrl" data="{{ route('board') }}"></board-url>
 	<list-url id="listUrl" data="{{ route('boardList') }}"></list-url>
 	<view-url id="viewUrl" data="{{ route('getView') }}"></view-url>
 	<modify-url id="modifyUrl" data="{{ route('boardModify', ['id' => ':id']) }}"></modify-url>

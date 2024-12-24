@@ -73,6 +73,11 @@ class BoardService
 		return Board::where('id', $id)->first();
 	}
 	
+	public function deleteBoard(int $id)
+	{
+		return Board::where('id', $id)->delete();
+	}
+	
 	public function getFiles(int $id)
 	{
 		return BoardFiles::where('board_num', $id)->get();
@@ -86,6 +91,11 @@ class BoardService
 	public function deleteFile(int $id)
 	{
 		return BoardFiles::where('id', $id)->delete();
+	}
+	
+	public function deleteBoardFiles(int $board_num)
+	{
+		return BoardFiles::where('board_num', $board_num)->delete();
 	}
 	
 	public function replyTotal(int $id)

@@ -38,6 +38,7 @@ class FileLibrary
 				//$realname = Storage::disk($this->uploadStore)->put($path, $value);
 				$realname = Storage::disk($this->uploadStore)->putFileAs($path, $value, uniqid() . rand(1, 9999) . "." . $value->getClientOriginalExtension());
 				array_push($result['data'], ['original_name' => $value->getClientOriginalName(), 'renamed_name' => $realname, 'key_name' => $key]);
+				chmod(storage_path('app/') . $realname, 0777);
 			} catch(\Exception $e) {
 				array_push($result, ['success' => false]);
 				return $result;
@@ -71,6 +72,7 @@ class FileLibrary
 			//$realname = Storage::disk($this->uploadStore)->put($path, $value);
 			$realname = Storage::disk($this->uploadStore)->putFileAs($path . "", $files, $newName . "." . $files->getClientOriginalExtension());
 			array_push($result['data'], ['original_name' => $files->getClientOriginalName(), 'renamed_name' => $realname]);
+			chmod(storage_path('app/') . $realname, 0777);
 		} catch(\Exception $e) {
 			array_push($result, ['success' => false]);
 			return $result;
@@ -98,6 +100,7 @@ class FileLibrary
 			//$realname = Storage::disk($this->uploadStore)->put($path, $value);
 			$realname = Storage::disk($this->uploadStore)->putFileAs($path, $files, uniqid() . rand(1, 9999) . "." . $files->getClientOriginalExtension());
 			array_push($result['data'], ['original_name' => $files->getClientOriginalName(), 'renamed_name' => $realname]);
+			chmod(storage_path('app/') . $realname, 0777);
 		} catch(\Exception $e) {
 			array_push($result, ['success' => false]);
 			return $result;
@@ -113,7 +116,7 @@ class FileLibrary
 		}
 		
 		try {
-			File::delete(Storage::disk($this->uploadStore)->path($file));
+			Storage::disk($this->uploadStore)->delete($file);
 			return true;
 		} catch(\Exception $e) {
 			return false;
