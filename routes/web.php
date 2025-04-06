@@ -6,7 +6,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function() { return view('test'); });
+Route::group(['prefix' => 'test'], function() {
+	Route::get('/test', function() { return view('test'); });
+	Route::get('/asyncTest', function() { return view('asyncTest'); });
+	Route::get('/getAsyncData', [App\Http\Controllers\ExtraController::class, 'getAsyncData'])->name('getAsyncData');
+	Route::post('/likepubsub', [App\Http\Controllers\ExtraController::class, 'likepubsub'])->name('likepubsub');
+});
 
 Route::get('/csrfReset', [App\Http\Controllers\ExtraController::class, 'csrfReset'])->name('csrfReset');
 

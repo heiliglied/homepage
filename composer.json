@@ -9,7 +9,8 @@
         "geoip2/geoip2": "~2.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.9",
-        "laravel/ui": "^4.5"
+        "laravel/ui": "^4.5",
+        "phpoffice/phpspreadsheet": "^4.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
