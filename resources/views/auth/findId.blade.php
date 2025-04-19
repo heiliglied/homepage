@@ -10,11 +10,11 @@
 		
 	</div>
 	
-	<router-url id="loginUrl" data="{{ route('signIn') }}">
-	<find-url id="findPassword" data="{{ route('findPassword') }}">
+	<router-url id="loginUrl" data="{{ route('login') }}">
+	<find-url id="idCheck" data="{{ route('idCheck') }}">
 </div>
 @endsection
 
 @section('scripts')
-@vite(['resources/js/app.js', 'resources/js/login.js'])
+@vite(['resources/js/app.js', 'resources/js/vue/auth/findId.js'])
 @endsection

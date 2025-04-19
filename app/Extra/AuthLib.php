@@ -4,9 +4,12 @@ namespace App\Extra;
 
 use App\Services\UserService;
 use App\Extra\MailLib;
+use App\Traits\CommonTrait;
 
 class AuthLib 
 {
+	use CommonTrait;
+	
 	public function __construct() {}
 	
 	public function registerUser(array $data)
@@ -139,5 +142,53 @@ class AuthLib
 				'msg' => '변경에 실패하였습니다.',
 			];
 		}
+	}
+	
+	public function emailCheck(String $email)
+	{
+		$UserService = UserService::getInstance();
+		$user = $UserService->emailCheck($email);
+		
+		if(!empty($user)) {
+			$MailLib = new MailLib();
+			$newPassword = $this->randomString('AZaz09', 10);
+			try {
+				$UserService->updateUser($user->id, ['password' => bcrypt($newPassword)]);
+				$MailLib->tempPassword(['email' => $user->email, 'password' => $newPassword]);
+			} catch(\Exception $e) {
+				return [
+					'status' => 'error',
+					'msg' => '비밀번호 확인에 실패하였습니다.'
+				];
+			}
+		}
+		
+		return [
+			'status' => 'success',
+			'msg' => '메일로 임시 비밀번호를 전송하였습니다.',
+		];
+	}
+	
+	public function idCheck(String $email)
+	{
+		$UserService = UserService::getInstance();
+		$user = $UserService->emailCheck($email);
+		
+		if(!empty($user)) {
+			$MailLib = new MailLib();
+			try {
+				$MailLib->findId(['email' => $user->email, 'id' => $user->user_id]);
+			} catch(\Exception $e) {
+				return [
+					'status' => 'error',
+					'msg' => '계정 확인에 실패하였습니다.'
+				];
+			}
+		}
+		
+		return [
+			'status' => 'success',
+			'msg' => '메일로 ID를 전송하였습니다.',
+		];
 	}
 }

@@ -60,4 +60,9 @@ class UserService
 	{
 		return User::where('id', $id)->first();
 	}
+	
+	public function emailCheck(String $email)
+	{
+		return User::where('email', $email)->first();
+	}
 }

@@ -12,6 +12,8 @@ export default defineConfig({
 				'resources/js/vue/auth/register.js',
 				'resources/js/vue/auth/login.js',
 				'resources/js/vue/auth/identify.js',
+				'resources/js/vue/auth/findPassword.js',
+				'resources/js/vue/auth/findId.js',
 				'resources/js/vue/jstester/view.js',
 				'resources/js/vue/my/view.js',
 				'resources/js/vue/board/list.js',

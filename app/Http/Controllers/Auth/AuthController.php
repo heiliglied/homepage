@@ -205,6 +205,22 @@ class AuthController extends Controller
 		*/
 	}
 	
+	public function emailCheck(Request $request)
+	{
+		$email = $request->email ?? '';
+		
+		$AuthLib = new AuthLib();
+		return $AuthLib->emailCheck($email);
+	}
+	
+	public function idCheck(Request $request)
+	{
+		$email = $request->email ?? '';
+		
+		$AuthLib = new AuthLib();
+		return $AuthLib->idCheck($email);
+	}
+	
 	private function validation(array $data)
 	{
 		return Validator::make($data, [

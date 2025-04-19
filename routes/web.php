@@ -27,6 +27,8 @@ Route::group(['prefix' => 'auth'], function() {
 	Route::get('findId', [App\Http\Controllers\Auth\AuthController::class, 'findId'])->name('findId');
 	Route::get('findPassword', [App\Http\Controllers\Auth\AuthController::class, 'findPassword'])->name('findPassword');
 	Route::post('findAuth', [App\Http\Controllers\Auth\AuthController::class, 'findAuth'])->name('findAuth');
+	Route::post('emailCheck', [App\Http\Controllers\Auth\AuthController::class, 'emailCheck'])->name('emailCheck');
+	Route::post('idCheck', [App\Http\Controllers\Auth\AuthController::class, 'idCheck'])->name('idCheck');
 });
 
 Route::group(['prefix' => 'jstester'], function() {
