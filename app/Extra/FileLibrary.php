@@ -34,6 +34,9 @@ class FileLibrary
 		
 		foreach($files as $key => $value) {
 			try {
+				if ($value->getError() !== UPLOAD_ERR_OK) {
+					throw new \Exception("Upload error ({$value->getError()}) for file: " . $value->getClientOriginalName());
+				}				
 				//put에서 파일명이 너무 길거나 파일 헤더의 확장자 정보를 제대로 못가져와서 bin타입으로 저장하는 버그가 발견되어 수정.
 				//$realname = Storage::disk($this->uploadStore)->put($path, $value);
 				$realname = Storage::disk($this->uploadStore)->putFileAs($path, $value, uniqid() . rand(1, 9999) . "." . $value->getClientOriginalExtension());
@@ -68,7 +71,9 @@ class FileLibrary
 		];
 		
 		try {
-			//$realname = Storage::disk($this->uploadStore)->put($path, $value);
+			if ($files->getError() !== UPLOAD_ERR_OK) {
+				throw new \Exception("Upload error ({$files->getError()}) for file: " . $files->getClientOriginalName());
+			}
 			$realname = Storage::disk($this->uploadStore)->putFileAs($path . "", $files, $newName . "." . $files->getClientOriginalExtension());
 			array_push($result['data'], ['original_name' => $files->getClientOriginalName(), 'renamed_name' => $realname]);
 		} catch(\Exception $e) {
@@ -95,7 +100,9 @@ class FileLibrary
 		];
 		
 		try {
-			//$realname = Storage::disk($this->uploadStore)->put($path, $value);
+			if ($files->getError() !== UPLOAD_ERR_OK) {
+				throw new \Exception("Upload error ({$files->getError()}) for file: " . $files->getClientOriginalName());
+			}
 			$realname = Storage::disk($this->uploadStore)->putFileAs($path, $files, uniqid() . rand(1, 9999) . "." . $files->getClientOriginalExtension());
 			array_push($result['data'], ['original_name' => $files->getClientOriginalName(), 'renamed_name' => $realname]);
 		} catch(\Exception $e) {
